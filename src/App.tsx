@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    <header className="bg-gradient-to-br from-blue-800 to-gray-200 py-8 max-h-72">
+    <header className="bg-gradient-to-br from-blue-800 to-purple-500 py-8 max-h-72">
       <h1 className="uppercase text-center font-black text-4xl text-white">
         Planificador De Gastos 
       </h1>
