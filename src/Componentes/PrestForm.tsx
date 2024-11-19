@@ -1,9 +1,13 @@
 import { useMemo, useState } from "react"
+import { useBugdet } from "../Hooks/useBudget"
+
 
 
 export default function PrestForm() {
 
     const [budget, setBudget]= useState(0)
+    const {dispatch}= useBugdet()
+
 
     const PrestChanges = (e : React.ChangeEvent<HTMLInputElement>) => {
      setBudget(e.target.valueAsNumber)
@@ -16,10 +20,18 @@ export default function PrestForm() {
     const validation = useMemo(() => {
         return isNaN(budget) || budget <= 0
     }, [budget])
+
+
+    const handSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+       e.preventDefault();
+
+
+       dispatch({type: 'add-budget', payload: {budget}})
+    }
   
   return (
     
-    <form className='space-y-5'>
+    <form className='space-y-5' onSubmit={handSubmit}>
         <div className='flex flex-col space-y-4'>
             <label htmlFor="budget" 
             className="text-4xl text-blue-800 font-bold text-center uppercase">
