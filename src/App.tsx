@@ -2,6 +2,8 @@ import { useMemo } from "react"
 import PrestForm from "./Componentes/PrestForm"
 import { useBugdet } from "./Hooks/useBudget"
 import BudgetTraker from "./Componentes/BudgetTraker"
+import ExpenseModal from "./Componentes/ExpenseModal"
+
 
 function App() {
 
@@ -22,6 +24,16 @@ function App() {
 
      </div>
     
+
+    {esvalidoBugdet && (
+      <main className="max-w-3xl mx-auto py-10">
+        
+        <ExpenseModal /> 
+      </main>
+        
+
+    )}
+   
         
     </>
   )
