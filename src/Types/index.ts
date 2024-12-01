@@ -1,12 +1,12 @@
 export type Expense = {
     id: string
-    ExpenseName: string 
+    expenseName: string 
     amount: number
     category: string
     date: Value
 }
 
-export type drafExpense = Omit<Expense, 'id'>
+export type draftExpense = Omit<Expense, 'id'>
 
 
 
