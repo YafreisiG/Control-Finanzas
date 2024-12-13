@@ -3,6 +3,7 @@ import PrestForm from "./Componentes/PrestForm"
 import { useBugdet } from "./Hooks/useBudget"
 import BudgetTraker from "./Componentes/BudgetTraker"
 import ExpenseModal from "./Componentes/ExpenseModal"
+import Lista from "./Componentes/Lista"
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
     {esvalidoBugdet && (
       <main className="max-w-3xl mx-auto py-10">
-        
+        <Lista/>
         <ExpenseModal /> 
       </main>
         

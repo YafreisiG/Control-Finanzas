@@ -5,6 +5,7 @@ import 'react-calendar/dist/Calendar.css'
 import 'react-date-picker/dist/DatePicker.css'
 import { draftExpense, Value} from "../Types";
 import ErrorMessege from "./ErrorMessege";
+import { useBugdet } from "../Hooks/useBudget";
 
 /* Creando el Formulario*/
 
@@ -30,6 +31,7 @@ export default function ExpenseForm() {
     }
 
     const [error, seteror] = useState('')
+    const {dispatch} = useBugdet()
 
     //submit 
 
@@ -41,7 +43,17 @@ export default function ExpenseForm() {
         seteror('Todos los campos son abligatorios')
         return
      }
-         console.log("todo esta prefecto")
+         //Agregar un nuevo gasto
+
+         dispatch({type: 'add-expense', payload: {expense}})
+
+
+         //reiniciar al state
+         setExpense({ 
+            amount: 0,
+            expenseName: '',
+            category: '',
+            date: new Date()})
 
     }
 

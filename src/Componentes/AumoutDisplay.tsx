@@ -1,7 +1,7 @@
 import { formatCurrency } from "../Helpers"
 
 type AumoutDisplayProps ={
-    label: string
+    label?: string
     amount: number
 }
 
