@@ -1,18 +1,56 @@
-import { useCallback, useMemo } from "react"
+import { useMemo } from "react"
 import { formatDate } from "../Helpers"
 import { Expense } from "../Types"
+import { 
+  LeadingActions,
+   SwipeableList, 
+  SwipeableListItem, 
+  SwipeAction, 
+  TrailingActions } from "react-swipeable-list"
 import AumoutDisplay from "./AumoutDisplay"
 import { categories } from "../data/Categorias"
+import { useBugdet } from "../Hooks/useBudget"
+import "react-swipeable-list/dist/styles.css"
+
 
 type ExpenseDetallesProps = {
     expense : Expense
 }
 
 export default function ExpenseDetalles({expense} : ExpenseDetallesProps) {
+     const { dispatch } = useBugdet()
 
      const categoryinfor = useMemo(() => categories.filter(cat => cat.id === expense.category)[0], [expense])
 
+   const leadingActions = () => (
+     <LeadingActions>
+          <SwipeAction
+         onClick={() => {}}
+         >
+           Actualizar
+       </SwipeAction>
+      </LeadingActions>
+      )
+
+       const trailingActions = () => (
+       <TrailingActions>
+         <SwipeAction
+           onClick={() => dispatch({type: 'remove-expence', payload: {id: expense.id}})}
+           destructive={true}
+          >
+            Eliminar
+         </SwipeAction>
+        </TrailingActions>
+      )
+
+
   return (
+    <SwipeableList>
+      <SwipeableListItem
+      maxSwipe={1}
+       leadingActions={leadingActions()}
+       trailingActions={trailingActions()} 
+      >
     <div className="bg-white shadow-lg p-10 w-full border-b border-gray-200 flex gap-5 items-center">
 
        <div>
@@ -28,8 +66,9 @@ export default function ExpenseDetalles({expense} : ExpenseDetallesProps) {
        <AumoutDisplay
          amount={expense.amount}
        />
-
-
     </div>
+    </SwipeableListItem>
+    </SwipeableList>
   )
+
 }
