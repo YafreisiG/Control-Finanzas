@@ -1,7 +1,15 @@
+import { useMemo } from "react";
+import { useBugdet } from "../Hooks/useBudget";
 import AumoutDisplay from "./AumoutDisplay";
 
 
 export default function BudgetTraker() {
+
+  const { state} = useBugdet()
+
+  const totalExpense = useMemo(() => state.expenses.reduce((total, expense) => expense.amount + total, 0), [state.expenses])
+
+   const spareExpense = state.budget - totalExpense
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="flex justify-center">
@@ -20,16 +28,16 @@ export default function BudgetTraker() {
 
             <AumoutDisplay
             label ="Presupuesto"
-            amount = {300}
+            amount = {state.budget}
             />
 
            <AumoutDisplay
             label ="Disponible"
-            amount = {200}
+            amount = {spareExpense}
             />
             <AumoutDisplay
             label ="Gastado"
-            amount = {100}
+            amount = {totalExpense}
             />
 
 

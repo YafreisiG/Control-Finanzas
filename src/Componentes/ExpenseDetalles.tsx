@@ -25,7 +25,7 @@ export default function ExpenseDetalles({expense} : ExpenseDetallesProps) {
    const leadingActions = () => (
      <LeadingActions>
           <SwipeAction
-         onClick={() => {}}
+         onClick={() => dispatch ({type: 'actually-expense-id', payload: {id: expense.id}})}
          >
            Actualizar
        </SwipeAction>
