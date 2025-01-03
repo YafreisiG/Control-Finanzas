@@ -1,5 +1,5 @@
 import { v4 as uuidv4} from "uuid"
-import { draftExpense, Expense } from "../Types"
+import { category, draftExpense, Expense } from "../Types"
 
 export type BudgetActions = {
     type: 'add-budget', payload: {budget: number}} |
@@ -8,13 +8,16 @@ export type BudgetActions = {
     {type: 'add-expense', payload: {expense: draftExpense}} |
     {type: 'remove-expence', payload: {id: Expense['id']}} |
     {type: 'actually-expense-id', payload: {id: Expense['id']}}|
-    {type: 'update-expense', payload:{expense: Expense}}
+    {type: 'update-expense', payload:{expense: Expense}} |
+    {type: 'resert-app', } |
+    {type: 'add-forCategory', payload: {id: category['id']}}
 
 export type BudgetState = {
     budget: number 
     modal: boolean
     expenses: Expense[]
     editingid: Expense['id']
+    CurrrentCategory: category ['id']
 } 
 
 const initialbudget = () : number => {
@@ -31,7 +34,8 @@ export const initialState : BudgetState = {
     budget: initialbudget(),
     modal: false,
     expenses: localStorageExpreses(),
-    editingid: ''
+    editingid: '',
+    CurrrentCategory: ''
 }
 
 const createExpense = (draftExpense: draftExpense): Expense => {
@@ -102,5 +106,21 @@ if(action.type === 'update-expense') {
         editingid: ''
     }
 }
+
+if(action.type === 'resert-app'){
+    return{
+
+        ...state,
+        budget: 0,
+        expenses:[]        
+}
+}
+
+if(action.type ===  'add-forCategory') 
+    return{
+          ...state, 
+          CurrrentCategory: action.payload.id
+    }
+
     return state  
 }

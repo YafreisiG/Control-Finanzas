@@ -7,7 +7,7 @@ type AumoutDisplayProps ={
 
 export default function AumoutDisplay({label, amount}: AumoutDisplayProps) {
   return (
-    <p className="text-2x1 text-blue-500 font-bold">
+    <p className="text-2xl text-blue-500 font-bold">
         {label} {''}
         <span className="font-black text-black">{formatCurrency (amount)}</span>
 

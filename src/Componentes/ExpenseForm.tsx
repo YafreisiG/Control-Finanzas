@@ -10,33 +10,37 @@ import { useBugdet } from "../Hooks/useBudget";
 /* Creando el Formulario*/
 
 
-
-
 export default function ExpenseForm() {
-
     const [expense, setExpense]= useState<draftExpense>({
         amount: 0,
         expenseName: '',
         category: '',
         date: new Date()
-
     })
+
+  
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target;
         setExpense(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: name === "amount" ? parseFloat(value) || 0 : value   // Conversión solo para "amount"
+
         }));
+
+
     }
 
     const [error, seteror] = useState('')
-    const {dispatch, state} = useBugdet()
+    const [previousAmount, setpreviousAmount] = useState(0)
+    const {dispatch, state, spareExpense} = useBugdet()
 
     useEffect(() => {
         if(state.editingid){
             const editingExpense = state.expenses.filter(currentExpense => currentExpense.id === state.editingid)[0]
             setExpense(editingExpense)
+            setpreviousAmount(editingExpense.amount)
+
         }
     }, [state.editingid])
 
@@ -45,11 +49,27 @@ export default function ExpenseForm() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
 
-        //Validacion 
-     if(Object.values(expense).includes('')) {
-        seteror('Todos los campos son abligatorios')
+        //Validacion
+        
+        if (!expense.expenseName || !expense.category || expense.amount <= 0) {
+            seteror('Todos los campos son obligatorios y la cantidad debe ser mayor a 0');
+            return;
+        }
+          
+
+     //if(Object.values(expense).includes('')) {
+       /// seteror('Todos los campos son abligatorios')
+        //return
+     //}
+
+     //Validar el limite de presupuesto
+ 
+
+  if((expense.amount - previousAmount) > spareExpense) {
+       seteror('Este gasto se sobresale del presupuesto')
         return
      }
+
          //Agregar o actualizar
          if(state.editingid) {
              dispatch({type: 'update-expense', payload:{expense: { id: state.editingid, ...expense}}})
@@ -64,8 +84,9 @@ export default function ExpenseForm() {
             amount: 0,
             expenseName: '',
             category: '',
-            date: new Date()})
-
+            date: new Date()
+        })
+        setpreviousAmount(0)
     }
 
     // Función para manejar el cambio de fecha

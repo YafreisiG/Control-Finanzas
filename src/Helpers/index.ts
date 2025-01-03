@@ -1,9 +1,8 @@
-import Year from "react-calendar/src/DecadeView/Year.js"
 
-export function formatCurrency(amount:number){
-    return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format
-    (amount)
+export function formatCurrency(amount: number): string {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
 }
+
 
 
 export function formatDate(DateStr: string): string {
